@@ -1,5 +1,5 @@
 {
-  "name": "Postgres-lab06",
+  "name": "postgres-lab06",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -26,6 +26,8 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "pg": "^8.5.1"
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "supertest": "^6.0.1"
   }
 }
