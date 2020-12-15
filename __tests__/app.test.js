@@ -5,7 +5,7 @@ const app = require('../lib/app');
 const Beer = require('../lib/models/Beer.js');
 
 
-describe('movies routes', () => {
+describe('beer routes', () => {
   beforeEach(() => {
     return pool.query(fs.readFileSync('./data/setup.sql', 'utf-8'));
   });
@@ -14,7 +14,7 @@ describe('movies routes', () => {
     return pool.end();
   });
 
-  it('create a new movie via POST', async() => {
+  it('create a new beer via POST', async() => {
     const response = await request(app)
         .post('/api/v1/beers')
         .send({
@@ -92,7 +92,7 @@ describe('movies routes', () => {
     });
   });
   //put
-  it('create a new movie via POST', async() => {
+  it('update a beer via PUT', async() => {
     await request(app)
         .post('/api/v1/beers')
         .send({
@@ -114,7 +114,7 @@ describe('movies routes', () => {
     });
   });
   //delete
-  it('insert multiple beers into the db and return a single beer with id=2', async () => {
+  it('delete a beer via DELETE', async () => {
     await request(app)
       .post('/api/v1/beers')
       .send({
@@ -133,12 +133,12 @@ describe('movies routes', () => {
       .delete('/api/v1/beers/1');
 
     const response = await request(app)
-      .get()
+      .get('/api/v1/beers')
 
-    expect(response.body).toEqual({
+    expect(response.body).toEqual([{
       id: '2',
       brewery: 'Ninkasi',
       beername: 'Tricerahops'
-    });
+    }]);
   });
 });
