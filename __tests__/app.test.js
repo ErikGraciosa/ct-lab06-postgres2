@@ -43,7 +43,6 @@ describe('movies routes', () => {
     const response = await request(app)
         .get('/api/v1/beers');
 
-    console.log('in test' + response)
     expect(response.body).toEqual([{
         id: '1',
         brewery: 'Deschutes',
@@ -58,7 +57,40 @@ describe('movies routes', () => {
   });
 
   //get by id
+  //having same promise.all as before putting items into db in different order.
+  it('insert multiple beers into the db and return a single beer with id=2', async () => {
+    // Promise.all([{
+    //     brewery: 'Deschutes',
+    //     beername: 'Mirror Pond'
+    //   },
+    //   {
+    //     brewery: 'Ninkasi',
+    //     beername: 'Tricerahops'
+    //   }
+    // ].map(beer => Beer.insert(beer)));
+    await request(app)
+      .post('/api/v1/beers')
+      .send({
+          brewery: 'Deschutes',
+          beername: 'Mirror Pond'
+      });
 
+    await request(app)
+      .post('/api/v1/beers')
+      .send({
+          brewery: 'Ninkasi',
+          beername: 'Tricerahops'
+      });
+
+    const response = await request(app)
+      .get('/api/v1/beers/2');
+
+    expect(response.body).toEqual({
+      id: '2',
+      brewery: 'Ninkasi',
+      beername: 'Tricerahops'
+    });
+  });
   //put
   
   //delete
