@@ -91,7 +91,7 @@ describe('beer routes', () => {
       beername: 'Tricerahops'
     });
   });
-  //put
+  
   it('update a beer via PUT', async() => {
     await request(app)
         .post('/api/v1/beers')
@@ -113,7 +113,7 @@ describe('beer routes', () => {
         beername: 'Pliny the Elder'
     });
   });
-  //delete
+  
   it('delete a beer via DELETE', async () => {
     await request(app)
       .post('/api/v1/beers')
