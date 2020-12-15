@@ -92,7 +92,53 @@ describe('movies routes', () => {
     });
   });
   //put
-  
-  //delete
+  it('create a new movie via POST', async() => {
+    await request(app)
+        .post('/api/v1/beers')
+        .send({
+            brewery: 'Deschutes',
+            beername: 'Mirror Pond'
+        });
+    
+    const response = await request(app)
+        .put('/api/v1/beers/1')
+        .send({
+          brewery: 'Russian River',
+          beername: 'Pliny the Elder'
+      });
 
+    expect(response.body).toEqual({
+        id: '1',
+        brewery: 'Russian River',
+        beername: 'Pliny the Elder'
+    });
+  });
+  //delete
+  it('insert multiple beers into the db and return a single beer with id=2', async () => {
+    await request(app)
+      .post('/api/v1/beers')
+      .send({
+          brewery: 'Deschutes',
+          beername: 'Mirror Pond'
+      });
+
+    await request(app)
+      .post('/api/v1/beers')
+      .send({
+          brewery: 'Ninkasi',
+          beername: 'Tricerahops'
+      });
+
+    await request(app)
+      .delete('/api/v1/beers/1');
+
+    const response = await request(app)
+      .get()
+
+    expect(response.body).toEqual({
+      id: '2',
+      brewery: 'Ninkasi',
+      beername: 'Tricerahops'
+    });
+  });
 });
