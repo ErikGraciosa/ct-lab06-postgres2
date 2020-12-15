@@ -30,15 +30,19 @@ describe('beer routes', () => {
   });
 
   it('return all beers in database via get', async() => {
-    Promise.all([{
-        brewery: 'Deschutes',
-        beername: 'Mirror Pond'
-      },
-      {
-        brewery: 'Ninkasi',
-        beername: 'Tricerahops'
-      }
-    ].map(beer => Beer.insert(beer)));
+    await request(app)
+      .post('/api/v1/beers')
+      .send({
+          brewery: 'Deschutes',
+          beername: 'Mirror Pond'
+      });
+
+    await request(app)
+      .post('/api/v1/beers')
+      .send({
+          brewery: 'Ninkasi',
+          beername: 'Tricerahops'
+      });
     
     const response = await request(app)
         .get('/api/v1/beers');
